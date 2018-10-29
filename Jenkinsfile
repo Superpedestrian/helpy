@@ -69,8 +69,8 @@ pipeline {
     stage('Test') {
         agent { label 'EKS-Node' }
         steps {
-            sleep 60
-            sh 'kubectl exec -it `kubectl get pods --namespace=$branch_ns | grep $branch_ns | cut -d " " -f1` --namespace=$branch_ns /src/test.sh'
+            sleep 120
+            sh 'kubectl exec -it `kubectl get pods --namespace=$branch_ns | grep $branch_ns | cut -d " " -f1` --namespace=$branch_ns /helpy/test.sh'
         }
     }
     stage('Build Caddy') {
