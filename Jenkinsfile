@@ -3,7 +3,7 @@ def branchFunction(branchIn) {
     return branchOut
 }
 def String rbVersion(text) {
-  Object matcher = readFile(text) =~ 'VERSION\s+=\s+\'(.+)\''
+  Object matcher = readFile(text) =~ 'VERSION\\s+=\\s+\'(.+)\''
   matcher ? matcher[0][1] : null
 }
 
