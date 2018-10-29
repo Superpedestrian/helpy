@@ -29,9 +29,11 @@ pipeline {
       agent { label 'EKS-Node' }
       environment {
         DOCKERHUB_CREDS     = credentials('dockerhub_cred')
+        HELPY_USERNAME      = credentials('helpy_username')
+        HELPY_PASSWORD      = credentials('helpy_password')
     }
       steps {
-          sh 'docker build -t $docker_image:$branch_ns .'
+          sh 'docker build --build-arg HELPY_USERNAME=$HELPY_USERNAME --build-arg HELPY_PASSWORD=$HELPY_PASSWORD  -t $docker_image:$branch_ns .'
           sh 'docker push $docker_image:$branch_ns'
       }
     }    
@@ -51,8 +53,6 @@ pipeline {
       agent { label 'EKS-Node' }
       environment {
         DOCKERHUB_CREDS     = credentials('dockerhub_cred')
-        HELPY_USERNAME      = credentials('helpy_username')
-        HELPY_PASSWORD      = credentials('helpy_password')
     }
       steps {
           sh 'kubectl create ns $branch_ns'
