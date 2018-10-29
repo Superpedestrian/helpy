@@ -79,6 +79,7 @@ pipeline {
       steps {
         sh 'docker build -t superpedestrian/caddy:latest Dockerfile-Caddy .'
         sh 'docker push superpedestrian/caddy:latest'
+      }
     }
     stage('Deploy CI') {
       agent { label 'EKS-Node' }
