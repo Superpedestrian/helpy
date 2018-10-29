@@ -63,7 +63,7 @@ pipeline {
     stage('Run Pods') {
         agent { label 'EKS-Node' }
         steps {
-            sh 'kubectl run postgres --namespace=$branch_ns --image=postgres/postgres:9.6.2 --port=5432 --expose=true'
+            sh 'kubectl run postgres --namespace=$branch_ns --image=postgres:9.6.2 --port=5432 --expose=true'
             sh 'kubectl run $branch_ns --namespace=$branch_ns --image=$docker_image:$branch_ns --image-pull-policy=Always --port=8088 --env="DATABASE_URL=postgres://postgres@postgres:5432/postgres"'
         }
     }
