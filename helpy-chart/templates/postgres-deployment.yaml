@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: postgres
+  name: postgres-helpy
 spec:
   replicas: 1
   strategy:
@@ -9,7 +9,7 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres
+        app: postgres-helpy
     spec:
       initContainers:
       - name: "remove-lost-found"
@@ -34,10 +34,10 @@ spec:
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
         image: postgres:9.6.2
-        name: postgres
+        name: postgres-helpy
         ports:
         - containerPort: 5432
-          name: postgres
+          name: postgres-helpy
         volumeMounts:
         - mountPath: /var/lib/postgresql/data/pgdata
           name: data
