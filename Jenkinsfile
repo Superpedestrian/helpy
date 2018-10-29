@@ -51,6 +51,8 @@ pipeline {
       agent { label 'EKS-Node' }
       environment {
         DOCKERHUB_CREDS     = credentials('dockerhub_cred')
+        HELPY_USERNAME      = credentials('helpy_username')
+        HELPY_PASSWORD      = credentials('helpy_password')
     }
       steps {
           sh 'kubectl create ns $branch_ns'
