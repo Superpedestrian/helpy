@@ -20,7 +20,7 @@ spec:
           image: superpedestrian/helpy:latest
           imagePullPolicy: Always
           envFrom:
-            - configMapRef:
+          - configMapRef:
               name: {{ .Values.service.configMapName }}
           ports:
             - name: helpy-http
