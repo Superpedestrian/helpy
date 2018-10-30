@@ -17,15 +17,15 @@ spec:
       - name: dockercred
       containers:
         - name: helpy
-        image: superpedestrian/helpy:latest
-        imagePullPolicy: Always
-        envFrom:
-        - configMapRef:
-            name: {{ .Values.service.configMapName }}
-        ports:
-        - containerPort: 8080
-          name: helpy-http
-          protocol: TCP
+          image: superpedestrian/helpy:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+              name: {{ .Values.service.configMapName }}
+          ports:
+            - name: helpy-http
+              containerPort: 8080
+              protocol: TCP
         resources: {}
       restartPolicy: Always
 status: {}
