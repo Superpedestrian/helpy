@@ -22,17 +22,17 @@ spec:
         - name: data
           mountPath: /var/lib/postgres
       containers:
-        envFrom:
-        - configMapRef:
+        - name: postgres-helpy
+          image: postgres:9.6.2
+          envFrom:
+          - configMapRef:
             name: {{ .Values.service.configMapName }}
-        image: postgres:9.6.2
-        name: postgres-helpy
-        ports:
-        - containerPort: 5432
-          name: postgres-helpy
-        volumeMounts:
-        - mountPath: /var/lib/postgresql/data/pgdata
-          name: data
+          ports:
+            - name: postgres-helpy
+              containerPort: 5432
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data/pgdata   
       subPath: postgresql-db
       restartPolicy: Always
       volumes:
