@@ -77,7 +77,7 @@ pipeline {
     stage('Build Caddy') {
       agent { label 'EKS-Node' }
       when {
-        branch 'feature/add-jenkins'
+        branch 'master'
       }
       steps {
         sh 'docker build -t superpedestrian/caddy:latest -f Dockerfile-Caddy .'
@@ -87,7 +87,7 @@ pipeline {
     stage('Deploy CI') {
       agent { label 'EKS-Node' }
       when {
-        branch 'feature/add-jenkins'
+        branch 'master'
       }
       steps {
         
