@@ -16,17 +16,16 @@ spec:
       imagePullSecrets:
       - name: dockercred
       containers:
-      - env:
+        - name: helpy
+        image: superpedestrian/helpy:latest
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: {{ .Values.service.configMapName }}
-        image: superpedestrian/helpy:latest
-        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: helpy-http
           protocol: TCP
-        name: helpy
         resources: {}
       restartPolicy: Always
 status: {}
