@@ -8,12 +8,16 @@ default: &default
 development:
   <<: *default
   database: helpy_development
-  port: 5432
-  host: localhost
+  username: <%= ENV['DB_USERNAME'] ||= 'postgres' %>
+  port: <%= ENV['DB_HOST'] ||= '5432' %>
+  host: <%= ENV['DB_URL'] ||= 'localhost' %>
 
 test:
   <<: *default
   database: helpy_test
+  username: <%= ENV['DB_USERNAME'] ||= 'postgres' %>
+  port: <%= ENV['DB_HOST'] ||= '5432' %>
+  host: <%= ENV['DB_URL'] ||= 'localhost' %>
 
 production:
   <<: *default
