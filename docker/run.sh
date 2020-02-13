@@ -20,14 +20,37 @@ echo "postgres is now available"
 
 RUN_PREPARE=${DO_NOT_PREPARE:-false}
 
+SETUP_DB=${SETUP_DB:-false}
+SETUP_HELPY_CLOUD=${SETUP_HELPY_CLOUD:-false}
+
+if [[ "$SETUP_DB" = "true" ]]
+  then
+    bundle remove helpy_cloud
+    echo "Migrating"
+    bundle exec rake db:migrate
+    echo "Seeding"
+    bundle exec rake db:seed || echo "db is already seeded"
+fi
+
+if [[ "$SETUP_HELPY_CLOUD" = "true" ]]
+  then
+    echo "Installing Helpy Cloud Migrations"
+    bundle exec rake helpy_cloud_engine:install:migrations
+    echo "Migrating"
+    bundle exec rake db:migrate
+fi
+
 if [[ "$RUN_PREPARE" = "false" ]]
   then
     echo "DO_NOT_PREPARE is not set or is false, preparing.."
+    # only necessary for first install
+    echo "Migrating"
     bundle exec rake db:migrate
-    bundle exec rake db:seed || echo "db is already seeded"
+    echo "Install Helpy Cloud assets"
     bundle exec rails g helpy_cloud:install
+    echo "Precompilation"
     bundle exec rake assets:precompile
-    bundle exec rake helpy:mailman mail_interval=30 &
+    nohup bundle exec rake helpy:mailman mail_interval=30 &
 fi
 
 echo "starting unicorn"
